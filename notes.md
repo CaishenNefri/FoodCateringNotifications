@@ -12,3 +12,11 @@ Docker tutorial: https://www.docker.com/blog/containerized-python-development-pa
 Marcin (#88285) nr zamówienia (#97141)
 
 //*[@id="react-select-5-option-2"]
+
+
+
+# Scraper
+## TODO
+1. Add headless mode
+2. Get username and password from keyvault or env file
+3. Clanup code
