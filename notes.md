@@ -20,3 +20,18 @@ Marcin (#88285) nr zamówienia (#97141)
 1. Add headless mode
 2. Get username and password from keyvault or env file
 3. Clanup code
+
+
+# Telegram BOT
+BotName: @ZdrowyCatering_bot
+https://web.telegram.org/a/#6304583297
+API Token in KeePass in Zdrowy Catering entry
+
+## TODO
+1. Send message to my private account
+
+
+## Sending Message
+Method: sendMessage
+
+https://api.telegram.org/bot6304583297:AAFHNBFFt78tSXzfHlP9xnQtaJddc7duUUk/sendMessage
