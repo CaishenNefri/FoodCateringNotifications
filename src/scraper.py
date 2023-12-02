@@ -11,14 +11,30 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains 
 from selenium.webdriver.common.keys import Keys
 
+import requests
+from azure.keyvault.secrets import SecretClient
+from azure.identity import DefaultAzureCredential
+
 
 from dotenv import load_dotenv
 import os
 
-print("Load env variables")
-load_dotenv()
-username = os.getenv("zc_username")
-password = os.getenv("zc_password")
+KVUri = f"https://kvzc.vault.azure.net/"
+
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=KVUri, credential=credential)
+
+print("Load secrets from key vault")
+telegram_token = client.get_secret("telegram-token").value
+telegram_chat_id = client.get_secret("telegram-chat-id").value
+container_app_fqdn = client.get_secret("container-app-fqdn").value
+zc_username = client.get_secret("zc-username").value
+zc_password = client.get_secret("zc-password").value
+
+telegram_message = ""
+method = "sendMessage"
+
+
 
 print("Start Chrome driver")
 chrome_options = Options()
@@ -28,24 +44,24 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 # chrome_options.add_argument(f'user-agent={userAgent}')
 # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 try:
-    driver = webdriver.Remote("https://example-app--tg8ymid.salmonpebble-c348b41e.westeurope.azurecontainerapps.io/wd/hub", options=chrome_options)
+    driver = webdriver.Remote(f"https://{container_app_fqdn}/wd/hub", options=chrome_options)
     # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
     # driver = webdriver.Remote("http://browser:4444/wd/hub", options=chrome_options)
     try:
         driver.implicitly_wait(10) #setup implicit wait for whole driver
 
         print("Enter login page zdrowycatering.pl")
-        time.sleep(60) # wait untl page is loaded
+        time.sleep(5) # wait untl page is loaded
         driver.get("https://panel.zdrowycatering.pl/pl/auth/login") # go to login page for zdrowycatering.pl
-        time.sleep(30) # wait untl page is loaded
+        time.sleep(5) # wait untl page is loaded
 
         print("Accept cookies")
         cookies = driver.find_element(By.ID, "rcc-confirm-button").click() #accept cookies
 
         print("Try to signin")
         login_form = driver.find_element(By.XPATH, "//form[1]") # find login form
-        login_form.find_element(By.NAME, "username").send_keys(username) # provide username
-        login_form.find_element(By.NAME, "password").send_keys(password) #provide password
+        login_form.find_element(By.NAME, "username").send_keys(zc_username) # provide username
+        login_form.find_element(By.NAME, "password").send_keys(zc_password) #provide password
         login_form.submit() # subimt login form
         time.sleep(5) # wait untl page is loaded
 
@@ -63,6 +79,11 @@ try:
         print("Print all dishes for today")
         for dish in dishes:
             print(dish.text)
+            telegram_message += dish.text + "\n"
+        
+        url = f"https://api.telegram.org/bot{telegram_token}/{method}?chat_id={telegram_chat_id}&text={telegram_message}"
+        x = requests.post(url)
+        print(x.text)
     finally:
         driver.quit() # closes all browser windows and ends the WebDriver session
 finally:
