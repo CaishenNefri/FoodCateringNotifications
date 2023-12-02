@@ -49,8 +49,8 @@ resource "azurerm_container_app" "example" {
     container {
       name   = "browser-chrome"
       image  = "selenium/standalone-chrome"
-      cpu    = 2
-      memory = "4Gi"
+      cpu    = 1
+      memory = "2Gi"
 
       readiness_probe {
         # path                    = "/readyz"

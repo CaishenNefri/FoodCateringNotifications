@@ -62,7 +62,8 @@ https://stackoverflow.com/questions/45323271/how-to-run-selenium-with-chrome-in-
 `docker run --network selenium  myimage`
 
 
-# Terrafoorm
+# Terraform
+`terraform apply -auto-approve -var-file="secrets.tfvars"`
 ## Container APP
 **Container App has limitation of the size of Share Memory**
 https://datawookie.dev/blog/2021/11/shared-memory-docker/
