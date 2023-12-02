@@ -53,8 +53,22 @@ https://www.selenium.dev/documentation/webdriver/drivers/remote_webdriver/
 https://stackoverflow.com/questions/45323271/how-to-run-selenium-with-chrome-in-docker
 
 
+
+
 ## Network
 `docker network create --driver bridge selenium`
 `docker run -d --shm-size=2g --hostname browser --network selenium -p 4444:4444 selenium/standalone-chrome`
 `docker build -t myimage .; docker run --network selenium  myimage`
 `docker run --network selenium  myimage`
+
+
+# Terrafoorm
+## Container APP
+**Container App has limitation of the size of Share Memory**
+https://datawookie.dev/blog/2021/11/shared-memory-docker/
+Blog about Shared Memory. Thanks @datawookie
+`chrome_options.add_argument("--disable-dev-shm-usage")` - can tell chrome to not use shared memory
+
+### Container App creation timeout out
+Bug knows since February 2023. Timeout because of the luck of "latestRevision": true
+https://github.com/hashicorp/terraform-provider-azurerm/issues/20435
