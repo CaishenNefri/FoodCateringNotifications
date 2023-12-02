@@ -22,19 +22,22 @@ password = os.getenv("zc_password")
 
 print("Start Chrome driver")
 chrome_options = Options()
-chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')
+chrome_options.add_argument("--disable-dev-shm-usage")
 # userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.56 Safari/537.36"
 # chrome_options.add_argument(f'user-agent={userAgent}')
 # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-# driver = webdriver.Remote("https://example-app--ij2zr32.delightfulpebble-1e4e8ea6.westeurope.azurecontainerapps.io/wd/hub", options=chrome_options)
-# driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
 try:
-    driver = webdriver.Remote("http://browser:4444/wd/hub", options=chrome_options)
+    driver = webdriver.Remote("https://example-app--tg8ymid.salmonpebble-c348b41e.westeurope.azurecontainerapps.io/wd/hub", options=chrome_options)
+    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
+    # driver = webdriver.Remote("http://browser:4444/wd/hub", options=chrome_options)
     try:
         driver.implicitly_wait(10) #setup implicit wait for whole driver
 
         print("Enter login page zdrowycatering.pl")
+        time.sleep(60) # wait untl page is loaded
         driver.get("https://panel.zdrowycatering.pl/pl/auth/login") # go to login page for zdrowycatering.pl
+        time.sleep(30) # wait untl page is loaded
 
         print("Accept cookies")
         cookies = driver.find_element(By.ID, "rcc-confirm-button").click() #accept cookies
