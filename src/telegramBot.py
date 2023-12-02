@@ -2,15 +2,21 @@ import requests
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+from azure.keyvault.secrets import SecretClient
+from azure.identity import DefaultAzureCredential
 
+KVUri = f"https://kvzc.vault.azure.net/"
 
-token = os.getenv("telegram_token")
-chat_id = os.getenv("telegram_chat_id")
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=KVUri, credential=credential)
+
+telegram_token = client.get_secret("telegram-token").value
+telegram_chat_id = client.get_secret("telegram-chat-id").value
+
 message_text = "Hello World\nline2\nline3"
 method = "sendMessage"
 
-url = f"https://api.telegram.org/bot{token}/{method}?chat_id={chat_id}&text={message_text}"
+url = f"https://api.telegram.org/bot{telegram_token}/{method}?chat_id={telegram_chat_id}&text={message_text}"
 
 x = requests.post(url)
 print(x.text)
