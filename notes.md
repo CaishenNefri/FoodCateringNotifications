@@ -64,7 +64,20 @@ https://stackoverflow.com/questions/45323271/how-to-run-selenium-with-chrome-in-
 
 # Terraform
 `terraform apply -auto-approve -var-file="secrets.tfvars"`
+
+## Contirbuting
+- https://github.com/hashicorp/terraform-provider-azurerm/blob/main/contributing/README.md
+- https://dev.to/cse/contributing-to-the-azure-terraform-provider-bm6
+- https://github.com/Azure/terraform/blob/master/provider/CONTRIBUTE.md
+- https://github.com/hashicorp/terraform-provider-azurerm/contribute
+
+- https://github.com/hashicorp/terraform-provider-azurerm/pull/23871
+- https://github.com/hashicorp/terraform-provider-azurerm/issues/23165
+
 ## Container APP
+**Issue reported regarding log analytics**
+https://github.com/microsoft/azure-container-apps/issues/1018
+
 **Container App has limitation of the size of Share Memory**
 https://datawookie.dev/blog/2021/11/shared-memory-docker/
 Blog about Shared Memory. Thanks @datawookie
@@ -73,3 +86,12 @@ Blog about Shared Memory. Thanks @datawookie
 ### Container App creation timeout out
 Bug knows since February 2023. Timeout because of the luck of "latestRevision": true
 https://github.com/hashicorp/terraform-provider-azurerm/issues/20435
+
+### yaml job container
+https://learn.microsoft.com/en-us/azure/container-apps/azure-resource-manager-api-spec?tabs=arm-template#examples
+
+
+# Container App Job
+- Tutorial https://learn.microsoft.com/en-us/azure/container-apps/tutorial-event-driven-jobs
+
+CLi to create: `az containerapp job create -n containerappjob-full3 -g zdrowycatering --yaml job-template.yaml`
