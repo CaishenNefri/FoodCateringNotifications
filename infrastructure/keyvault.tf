@@ -52,7 +52,8 @@ resource "azurerm_key_vault_access_policy" "me" {
     "Set",
     "Delete",
     "Backup",
-    "Restore"
+    "Restore",
+    "Purge"
   ]
 }
 
@@ -78,11 +79,5 @@ resource "azurerm_key_vault_secret" "zc_username" {
 resource "azurerm_key_vault_secret" "zc_password" {
   name         = "zc-password"
   value        = var.zc_password
-  key_vault_id = azurerm_key_vault.example.id
-}
-
-resource "azurerm_key_vault_secret" "container_app_fqdn" {
-  name         = "container-app-fqdn"
-  value        = azurerm_container_app.example.latest_revision_fqdn
   key_vault_id = azurerm_key_vault.example.id
 }
