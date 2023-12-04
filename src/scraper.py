@@ -12,6 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 import requests
+import json #needed to parse json response from Selenium Standalone Server
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
@@ -27,7 +28,6 @@ client = SecretClient(vault_url=KVUri, credential=credential)
 print("Load secrets from key vault")
 telegram_token = client.get_secret("telegram-token").value
 telegram_chat_id = client.get_secret("telegram-chat-id").value
-container_app_fqdn = client.get_secret("container-app-fqdn").value
 zc_username = client.get_secret("zc-username").value
 zc_password = client.get_secret("zc-password").value
 
@@ -44,8 +44,8 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 # chrome_options.add_argument(f'user-agent={userAgent}')
 # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 try:
-    driver = webdriver.Remote(f"https://{container_app_fqdn}/wd/hub", options=chrome_options)
-    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
+    # driver = webdriver.Remote(f"https://{container_app_fqdn}/wd/hub", options=chrome_options)
+    driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options) # localhost address points to Selenium Standalone Server container in the same pod where script is running
     # driver = webdriver.Remote("http://browser:4444/wd/hub", options=chrome_options)
     try:
         driver.implicitly_wait(10) #setup implicit wait for whole driver
@@ -67,7 +67,8 @@ try:
 
         print("Choose Marcin's diet")
         diets_list = driver.find_element(By.CLASS_NAME, "select--diets").click() # open menu to pick Marcin's diet
-        driver.find_element(By.XPATH, "//*[text()='Marcin (#88285) nr zamówienia (#97141)']").click() # pick Marcin's diet
+        # driver.find_element(By.XPATH, "//*[text()='Marcin (#88285) nr zamówienia (#97141)']").click() # pick Marcin's diet
+        driver.find_element(By.XPATH, "//*[text()='Paulina (#88286) nr zamówienia (#97141)']").click() # pick Paulina's diet
         time.sleep(5) # wait untl page is loaded
 
         print("Pick today's date")
@@ -85,7 +86,19 @@ try:
         x = requests.post(url)
         print(x.text)
     finally:
+        print("Failing scraping today dishes")
         driver.quit() # closes all browser windows and ends the WebDriver session
 finally:
+    try:
+        # Try to stop Selenium container before finishing script. It finishs Container App Job fully
+        print("Tring to get Selenium Standalone Server status")
+        response = requests.get("http://127.0.0.1:4444/wd/hub/status")
+        loaded = json.loads(response.text)
+        print("Getting Selenium Node id")
+        node_id = loaded["value"]["nodes"][0]["id"]
+        print("Draining Selenium Node")
+        requests.post(f"http://127.0.0.1:4444/se/grid/distributor/node/{node_id}/drain", headers={"X-REGISTRATION-SECRET": ""})
+    finally:
+        print("Closing Sellenium Standalone Server failed")
     print("End of script")
     
