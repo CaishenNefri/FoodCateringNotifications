@@ -1,5 +1,3 @@
-#https://panel.zdrowycatering.pl/pl/auth/login
-
 import time
 import logging
 from selenium import webdriver

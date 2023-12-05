@@ -3,7 +3,7 @@ App hosted on new Azure service Containers Apps Job - check what I have in diet 
 <img src="./images/diagram.drawio.svg">  
 <img src="./images/telegram-screenshot.jpg">  
 
-https://www.zdrowycatering.pl/ deliver food every day. You can order up to 5 meals. Me and mi girfriend bought two diets. We had to go to the website and see who got what. Application is sending message to me every day at 8:00am which dishes are mine. 
+https://www.zdrowycatering.pl/ delivers meals every day. You can order up to 5 meals. My girlfriend and I ordered two diets. We had to go on the website to see who got what. The application sends me a message every day at 8:00 a.m. telling me which dishes are mine.
 
 # What have I learned?
 - **Azure Container Apps** - It is new Azure resource. It became generally available in May 2022. https://azure.microsoft.com/en-us/updates/generally-available-azure-container-apps/
