@@ -1,6 +1,7 @@
 # Zdrowy Catering - Food Diet Notification
 App hosted on new Azure service Containers Apps Job - check what I have in diet for today.  
 <img src="./images/diagram.drawio.svg">  
+<img src="./images/telegram-screenshot.jpg">  
 
 https://www.zdrowycatering.pl/ deliver food every day. You can order up to 5 meals. Me and mi girfriend bought two diets. We had to go to the website and see who got what. Application is sending message to me every day at 8:00am which dishes are mine. 
 
