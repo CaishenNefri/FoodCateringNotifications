@@ -19,3 +19,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 secrets.tfvars
+
+# Drawio
+.$diagram.drawio.bkp
