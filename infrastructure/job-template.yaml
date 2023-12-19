@@ -51,7 +51,7 @@ properties:
         memory: 2Gi
     - env:
       - name: AZURE_CLIENT_ID
-        value: d22ef40a-f8b4-4d48-8f93-3da59b7e6201
+        value: 41bbdf42-5fe4-4195-a755-17a3c0cc1af1
       image: caishen/zdrowy_catering_notifications
       name: scrapper
       probes:
