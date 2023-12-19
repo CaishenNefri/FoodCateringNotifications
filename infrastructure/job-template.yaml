@@ -1,0 +1,91 @@
+identity:
+  type: UserAssigned
+  userAssignedIdentities:
+    ? /subscriptions/1564f82f-9f08-47e0-9939-5e3dcc739b5e/resourcegroups/zdrowycatering/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity
+    : clientId: d22ef40a-f8b4-4d48-8f93-3da59b7e6201
+      principalId: a6290132-5287-46b7-97ee-627a437551c8
+location: West Europe
+properties:
+  configuration:
+    dapr: null
+    eventTriggerConfig: null
+    manualTriggerConfig: null
+    registries: null
+    replicaRetryLimit: 2
+    replicaTimeout: 600
+    scheduleTriggerConfig:
+      cronExpression: '0 7 */1 */1 */1'
+      parallelism: 1
+      replicaCompletionCount: 1
+    secrets: null
+    triggerType: Schedule
+  environmentId: /subscriptions/1564f82f-9f08-47e0-9939-5e3dcc739b5e/resourceGroups/zdrowycatering/providers/Microsoft.App/managedEnvironments/Example-Environment2
+  eventStreamEndpoint: https://westeurope.azurecontainerapps.dev/subscriptions/1564f82f-9f08-47e0-9939-5e3dcc739b5e/resourceGroups/zdrowycatering/containerApps/containerappjob/eventstream
+  provisioningState: Succeeded
+  template:
+    containers:
+    - image: selenium/standalone-chrome
+      name: browser-chrome
+      probes:
+      - failureThreshold: 1
+        httpGet:
+          path: /wd/hub/status
+          port: 4444
+          scheme: HTTP
+        initialDelaySeconds: 12
+        periodSeconds: 10
+        timeoutSeconds: 5
+        type: Liveness
+      - failureThreshold: 1
+        httpGet:
+          path: /wd/hub/status
+          port: 4444
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 3
+        timeoutSeconds: 5
+        type: Readiness
+      resources:
+        cpu: 1
+        ephemeralStorage: 4Gi
+        memory: 2Gi
+    - env:
+      - name: AZURE_CLIENT_ID
+        value: d22ef40a-f8b4-4d48-8f93-3da59b7e6201
+      image: caishen/zdrowy_catering_notifications
+      name: scrapper
+      probes:
+      - failureThreshold: 1
+        httpGet:
+          path: /wd/hub/status
+          port: 4444
+          scheme: HTTP
+        initialDelaySeconds: 12
+        periodSeconds: 10
+        timeoutSeconds: 5
+        type: Liveness
+      - failureThreshold: 1
+        httpGet:
+          path: /wd/hub/status
+          port: 4444
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 3
+        timeoutSeconds: 5
+        type: Readiness
+      resources:
+        cpu: 1
+        ephemeralStorage: 4Gi
+        memory: 2Gi
+    initContainers: null
+    revisionSuffix: ''
+    scale:
+      maxReplicas: 1
+      minReplicas: 1
+      rules: null
+    serviceBinds: null
+    terminationGracePeriodSeconds: null
+    volumes: []
+  workloadProfileName: null
+resourceGroup: zdrowycatering
+type: Microsoft.App/jobs

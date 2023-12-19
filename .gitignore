@@ -1,0 +1,24 @@
+*.env
+# Python
+*.pyc
+__pycache__/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+secrets.tfvars
+
+# Drawio
+.$diagram.drawio.bkp

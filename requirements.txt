@@ -1,0 +1,6 @@
+selenium
+webdriver-manager
+requests
+
+azure-identity
+azure-keyvault-secrets
