@@ -48,7 +48,7 @@ try:
         time.sleep(5) # wait until page is loaded
 
         print("Accept cookies")
-        cookies = driver.find_element(By.ID, "rcc-confirm-button").click() #accept cookies
+        cookies = driver.find_element(By.CLASS_NAME, "consent-give").click() #accept cookies
 
         print("Try to signin")
         login_form = driver.find_element(By.XPATH, "//form[1]") # find login form
@@ -57,10 +57,10 @@ try:
         login_form.submit() # submit login form
         time.sleep(5) # wait until page is loaded
 
-        print("Choose Paulina's diet")
+        print("Choose Marcin's diet")
         diets_list = driver.find_element(By.CLASS_NAME, "select--diets").click() # open menu with diets
-        # driver.find_element(By.XPATH, "//*[text()='Marcin (#88285) nr zamówienia (#97141)']").click() # pick Marcin's diet
-        driver.find_element(By.XPATH, "//*[text()='Paulina (#88286) nr zamówienia (#97141)']").click() # pick Paulina's diet
+        driver.find_element(By.XPATH, "//*[text()='Marcin (#88285) nr zamówienia (#97141)']").click() # pick Marcin's diet
+        # driver.find_element(By.XPATH, "//*[text()='Paulina (#88286) nr zamówienia (#97141)']").click() # pick Paulina's diet
         time.sleep(5) # wait untl page is loaded
 
         print("Pick today's date")
