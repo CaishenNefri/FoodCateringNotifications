@@ -2,8 +2,8 @@ identity:
   type: UserAssigned
   userAssignedIdentities:
     ? /subscriptions/1564f82f-9f08-47e0-9939-5e3dcc739b5e/resourcegroups/zdrowycatering/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity
-    : clientId: d22ef40a-f8b4-4d48-8f93-3da59b7e6201
-      principalId: a6290132-5287-46b7-97ee-627a437551c8
+    : clientId: 41bbdf42-5fe4-4195-a755-17a3c0cc1af1
+      principalId: 7ffb6d8b-7ea7-4036-ae9f-e3c6d4f1ed20
 location: West Europe
 properties:
   configuration:
