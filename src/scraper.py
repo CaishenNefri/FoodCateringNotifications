@@ -78,7 +78,7 @@ try:
         x = requests.post(url)
         print(x.text)
     finally:
-        print("Failing scraping today dishes")
+        print("Finishing scraping today dishes")
         driver.quit() # closes all browser windows and ends the WebDriver session
 finally:
     try:
@@ -91,6 +91,6 @@ finally:
         print("Draining Selenium Node")
         requests.post(f"http://127.0.0.1:4444/se/grid/distributor/node/{node_id}/drain", headers={"X-REGISTRATION-SECRET": ""})
     finally:
-        print("Closing Sellenium Standalone Server failed")
+        print("Closing Sellenium Standalone Server finished")
     print("End of script")
     
