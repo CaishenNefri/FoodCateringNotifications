@@ -21,6 +21,7 @@ https://www.zdrowycatering.pl/ delivers meals every day. You can order up to 5 m
 Most of the infra is described in Terraform. You can deploy it via `terraform apply -auto-approve -var-file="secrets.tfvars"`. File `secrets.tfvars` is not commited but is synced via Mega Cloud.
 2. Container App Job   
 Created via Azure CLI because terraform doesn't support it yet `az containerapp job create -n containerappjob-full3 -g zdrowycatering --yaml job-template.yaml`. 
+**Remember** to update env variable AZURE_CLIENT_ID and userAssignedIdentities base on used identity.
 
 ## Code
 Code is containerized in Docker.  
