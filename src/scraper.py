@@ -20,15 +20,6 @@ import os
 
 KVUri = f"https://kvzc.vault.azure.net/"
 
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url=KVUri, credential=credential)
-
-print("Load secrets from key vault")
-telegram_token = client.get_secret("telegram-token").value
-telegram_chat_id = client.get_secret("telegram-chat-id").value
-zc_username = client.get_secret("zc-username").value
-zc_password = client.get_secret("zc-password").value
-
 telegram_message = ""
 method = "sendMessage"
 
@@ -38,6 +29,18 @@ print("Start Chrome driver")
 chrome_options = Options()
 chrome_options.add_argument("--disable-dev-shm-usage")
 try:
+    print("Trying to load secret from keyvault")
+    credential = DefaultAzureCredential()
+    client = SecretClient(vault_url=KVUri, credential=credential)
+
+    print("Load secrets from key vault")
+    telegram_token = client.get_secret("telegram-token").value
+    telegram_chat_id = client.get_secret("telegram-chat-id").value
+    zc_username = client.get_secret("zc-username").value
+    zc_password = client.get_secret("zc-password").value
+    zc_diet = client.get_secret("zc-diet").value
+
+
     driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options) # localhost address points to Selenium Standalone Server container in the same pod where script is running
     try:
         driver.implicitly_wait(10) #setup implicit wait for whole driver
@@ -59,8 +62,8 @@ try:
 
         print("Choose Marcin's diet")
         diets_list = driver.find_element(By.CLASS_NAME, "select--diets").click() # open menu with diets
-        driver.find_element(By.XPATH, "//*[text()='Marcin (#88285) nr zamówienia (#97141)']").click() # pick Marcin's diet
-        # driver.find_element(By.XPATH, "//*[text()='Paulina (#88286) nr zamówienia (#97141)']").click() # pick Paulina's diet
+        diet = f"//*[text()='${zc_diet}']"
+        driver.find_element(By.XPATH, diet).click() # pick Marcin's diet
         time.sleep(5) # wait untl page is loaded
 
         print("Pick today's date")
