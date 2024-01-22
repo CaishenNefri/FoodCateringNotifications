@@ -19,3 +19,9 @@ variable "zc_password" {
   type        = string
   sensitive   = true
 }
+
+variable "zc_diet" {
+  description = "Password for Zdrowy Catering"
+  type        = string
+  sensitive   = true
+}

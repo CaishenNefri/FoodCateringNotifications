@@ -104,3 +104,9 @@ resource "azurerm_key_vault_secret" "zc_password" {
   value        = var.zc_password
   key_vault_id = azurerm_key_vault.example.id
 }
+
+resource "azurerm_key_vault_secret" "zc_diet" {
+  name         = "zc-diet"
+  value        = var.zc_diet
+  key_vault_id = azurerm_key_vault.example.id
+}
